@@ -1,5 +1,7 @@
 from mmpretrain import configs
 
+data_root = "data/"
+
 dataset_preprocessor = dict(
     type='SelfSupDataPreprocessor',
     mean=[106.335, 109.9305, 107.3295],
