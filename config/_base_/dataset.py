@@ -1,6 +1,7 @@
 from mmpretrain import configs
 
-data_root = "data/"
+dataset_type="CustomDataset"
+data_root = "/content/data/"
 
 dataset_preprocessor = dict(
     type='SelfSupDataPreprocessor',

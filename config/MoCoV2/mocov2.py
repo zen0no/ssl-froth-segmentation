@@ -5,10 +5,12 @@ from mmpretrain.models.backbones import ResNet
 from mmpretrain.models.necks import MoCoV2Neck
 from mmpretrain.models.heads import ContrastiveHead
 
+from mmpretrain.models.losses.cross_entropy_loss import CrossEntropyLoss
 
 with read_base():
     from .._base_.dataset import *
     from .._base_.runtime import *
+    from .._base_.scheduler import *
 
 model = dict(
     type=MoCo,
@@ -18,19 +20,19 @@ model = dict(
     backbone=dict(
         type=ResNet,
         depth=50,
-        norm_cfg=dict(type="BN"),
-        zero_init_residual=False,)
+        norm_cfg=dict(type='BN'),
+        zero_init_residual=False),
     neck=dict(
-        type=MoCoV2Neck,
+        type=MoCoV2Neck
+        ,
         in_channels=2048,
         hid_channels=2048,
         out_channels=128,
         with_avg_pool=True),
     head=dict(
-        type=ContrastiveHead
-        loss=dict(type="CrossEntropyLoss"),
-        temperature=0.2)
-)
+        type=ContrastiveHead,
+        loss=dict(type=CrossEntropyLoss),
+        temperature=0.2))
 
 
 default_hooks = dict(checkpoint=dict(max_keep_ckpts=3))
