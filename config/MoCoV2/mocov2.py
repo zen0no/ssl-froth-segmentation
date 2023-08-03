@@ -35,7 +35,13 @@ model = dict(
         temperature=0.2))
 
 
-default_hooks = dict(checkpoint=dict(max_keep_ckpts=3))
+oks = dict(
+        checkpoint=dict(interval=1, max_keep_ckpts=3, type='CheckpointHook'),
+        logger=dict(interval=100, type='LoggerHook'),
+        param_scheduler=dict(type='ParamSchedulerHook'),
+        sampler_seed=dict(type='DistSamplerSeedHook'),
+        timer=dict(type='IterTimerHook'),
+      )
 
 auto_scale_lr = dict(base_batch_size=256)
 

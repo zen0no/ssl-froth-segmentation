@@ -1,6 +1,12 @@
 from mmpretrain import configs
+from mmpretrain.datasets.custom import CustomDataset
 
-dataset_type="CustomDataset"
+from mmpretrain.datasets.transforms.processing import (RandomResizedCrop,
+                                                       ColorJitter)
+from mmpretrain.datasets.transforms.auto_augment import GaussianBlur
+
+
+dataset_type=CustomDataset
 data_root = "/content/data/"
 
 dataset_preprocessor = dict(
@@ -13,7 +19,7 @@ dataset_preprocessor = dict(
 # The difference between mocov2 and mocov1 is the transforms in the pipeline
 view_pipeline = [
     dict(
-        type='RandomResizedCrop',
+        type=RandomResizedCrop,
         scale=224,
         crop_ratio_range=(0.2, 1.),
         backend='pillow'),
@@ -21,7 +27,7 @@ view_pipeline = [
         type='RandomApply',
         transforms=[
             dict(
-                type='ColorJitter',
+                type=ColorJitter,
                 brightness=0.4,
                 contrast=0.4,
                 saturation=0.4,
@@ -34,7 +40,7 @@ view_pipeline = [
         keep_channels=True,
         channel_weights=(0.114, 0.587, 0.2989)),
     dict(
-        type='GaussianBlur',
+        type=GaussianBlur,
         magnitude_range=(0.1, 2.0),
         magnitude_std='inf',
         prob=0.5),
@@ -57,6 +63,5 @@ train_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        split='train',
         pipeline=train_pipeline))
 
