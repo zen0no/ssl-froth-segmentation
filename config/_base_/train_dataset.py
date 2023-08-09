@@ -63,5 +63,6 @@ train_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        pipeline=train_pipeline))
+        pipeline=train_pipeline,
+        with_label=False))
 
